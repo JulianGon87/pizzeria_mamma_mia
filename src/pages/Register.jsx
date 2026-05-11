@@ -1,8 +1,9 @@
 import { useState } from 'react';
 
-const Login = () => {
+const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [message, setMessage] = useState('');
   const [isError, setIsError] = useState(false);
 
@@ -10,7 +11,7 @@ const Login = () => {
     e.preventDefault();
 
     // Validations
-    if (!email.trim() || !password.trim()) {
+    if (!email.trim() || !password.trim() || !confirmPassword.trim()) {
       setMessage('⚠️ Todos los campos son obligatorios.');
       setIsError(true);
       return;
@@ -22,19 +23,25 @@ const Login = () => {
       return;
     }
 
+    if (password !== confirmPassword) {
+      setMessage('⚠️ Las contraseñas no coinciden. Inténtalo nuevamente.');
+      setIsError(true);
+      return;
+    }
+
     // Success
-    setMessage('🍕 ¡Inicio de sesión exitoso! Bienvenido a Pizzería Mamma Mía.');
+    setMessage('🍕 ¡Registro completado con éxito! Ya eres parte de Mamma Mía.');
     setIsError(false);
   };
 
   return (
-    <div className="container mt-5">
+    <div className="container mt-5 mb-5">
       <div className="row justify-content-center">
         <div className="col-12 col-md-8 col-lg-5">
           <div className="card shadow-lg border-0 rounded-4 p-4 p-md-5 bg-white">
             <div className="text-center mb-4">
-              <h2 className="fw-bold mb-2">Iniciar Sesión</h2>
-              <p className="text-muted">Ingresa a tu cuenta para pedir tus pizzas favoritas</p>
+              <h2 className="fw-bold mb-2 text-dark">Crear Cuenta</h2>
+              <p className="text-muted">Regístrate para disfrutar de las mejores pizzas</p>
             </div>
             
             {message && (
@@ -45,7 +52,7 @@ const Login = () => {
 
             <form onSubmit={handleSubmit}>
               <div className="mb-4">
-                <label className="form-label fw-semibold">Correo Electrónico</label>
+                <label className="form-label fw-semibold text-dark">Correo Electrónico</label>
                 <input
                   type="email"
                   className="form-control form-control-lg bg-light border-0"
@@ -55,20 +62,30 @@ const Login = () => {
                 />
               </div>
               <div className="mb-4">
-                <label className="form-label fw-semibold">Contraseña</label>
+                <label className="form-label fw-semibold text-dark">Contraseña</label>
                 <input
                   type="password"
                   className="form-control form-control-lg bg-light border-0"
-                  placeholder="Ingresa tu contraseña"
+                  placeholder="Mínimo 6 caracteres"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
+                />
+              </div>
+              <div className="mb-4">
+                <label className="form-label fw-semibold text-dark">Confirmar Contraseña</label>
+                <input
+                  type="password"
+                  className="form-control form-control-lg bg-light border-0"
+                  placeholder="Vuelve a escribir tu contraseña"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
                 />
               </div>
               <button 
                 type="submit" 
                 className="btn btn-dark btn-lg w-100 rounded-pill fw-bold shadow-sm"
               >
-                Ingresar a mi cuenta
+                Registrarme
               </button>
             </form>
           </div>
@@ -78,4 +95,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;

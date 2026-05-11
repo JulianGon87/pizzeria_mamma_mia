@@ -1,11 +1,23 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+import { BrowserRouter } from 'react-router-dom'
+import 'bootstrap/dist/css/bootstrap.min.css'
 import './index.css'
 import App from './App.jsx'
-import 'bootstrap/dist/css/bootstrap.min.css';
+import { CartProvider } from './context/CartContext.jsx'
+import { PizzaProvider } from './context/PizzaContext.jsx'
+import { UserProvider } from './context/UserContext.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <App />
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
+      <UserProvider>
+        <CartProvider>
+          <PizzaProvider>
+            <App />
+          </PizzaProvider>
+        </CartProvider>
+      </UserProvider>
+    </BrowserRouter>
   </StrictMode>,
 )
