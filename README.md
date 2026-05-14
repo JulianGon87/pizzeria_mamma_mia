@@ -40,22 +40,35 @@ Una aplicación web interactiva para una pizzería construida como una Single Pa
 - ✅ **Hito 7 - React Router II:** Se implementaron rutas dinámicas (para cada pizza mediante su `id`) consumiendo información desde la API en base al ID extraído con `useParams`. Se crearon rutas protegidas redirigiendo al usuario usando `<Navigate>` en `react-router-dom`. Se añadió también `UserContext` para simular un inicio de sesión global (token) y restringir o habilitar elementos de la UI como el botón "Pagar" en el carrito o los links en el Navbar.
 - ✅ **Hito 8 - Autenticación Real (Final):** Implementación de autenticación persistente con el backend mediante JWT. Se integraron los métodos `login`, `register` y `getProfile` en el `UserContext`. Se implementó el envío real del carrito al backend (`checkout`) y se añadió feedback visual (mensajes de éxito/error) para todas las operaciones asíncronas.
 
-
 ## Instalación y Uso
 
-1. Clona este repositorio:
-   ```bash
-   git clone https://github.com/JulianGon87/pizzeria_mamma_mia
-   ```
-2. Ingresa al directorio del proyecto:
-   ```bash
-   cd pizzeria-mamma-mia
-   ```
+### 1. Clonar el repositorio
+```bash
+git clone https://github.com/JulianGon87/pizzeria_mamma_mia.git
+cd pizzeria_mamma_mia
+```
+
+### 2. Configurar el Backend (API)
+El repositorio incluye el archivo `simple-api-backend-nodejs-express-fs-json-jwt-main.rar` con la API necesaria.
+1. Descomprime el archivo `.rar` en una carpeta de tu elección.
+2. Abre una terminal en esa carpeta.
 3. Instala las dependencias:
    ```bash
    npm install
    ```
-4. Ejecuta el servidor de desarrollo:
+4. Inicia el servidor:
+   ```bash
+   npm start
+   ```
+   *La API correrá en `http://localhost:5000`.*
+
+### 3. Configurar el Frontend (React)
+1. En la carpeta raíz del proyecto (`pizzeria-mamma-mia`), instala las dependencias:
+   ```bash
+   npm install
+   ```
+2. Inicia la aplicación:
    ```bash
    npm run dev
    ```
+3. Abre `http://localhost:5173` en tu navegador.
