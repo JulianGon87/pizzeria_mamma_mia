@@ -26,7 +26,8 @@ Una aplicación web interactiva para una pizzería construida como una Single Pa
 - **Renderizado de Listas (List Rendering)**: Uso del método `.map()` y asignación de la prop única `key` para construir interfaces repetitivas dinámicamente a partir de arrays de datos.
 - **Mutabilidad Controlada de Arrays**: Manipulación del estado de manera inmutable utilizando funciones de orden superior de JavaScript (`.map()`, `.filter()`, `.reduce()`) para el manejo lógico de la información del carrito.
 - **Funciones Utilitarias (Helpers)**: Extracción de la lógica de formato de moneda a módulos independientes para mantener el principio DRY (*Don't Repeat Yourself*).
-- **Consumo de APIs**: Uso de `fetch` y el hook `useEffect` para obtener datos desde un backend (API REST) y manejar operaciones asíncronas en los componentes.
+- **JWT (JSON Web Tokens)**: Implementación de seguridad basada en tokens para la autenticación de usuarios y autorización de peticiones protegidas (como el proceso de pago).
+- **Consumo de APIs**: Uso de `fetch` y el hook `useEffect` para obtener datos desde un backend (API REST), manejar operaciones asíncronas de autenticación (Login/Register) y envío de órdenes de compra (Checkout).
 
 ## Estado del Proyecto (Hitos)
 
@@ -37,6 +38,8 @@ Una aplicación web interactiva para una pizzería construida como una Single Pa
 - ✅ **Hito 5 - React Router:** Refactorización de la estructura de carpetas (separando `pages` de `components`). Configuración de enrutamiento con `react-router-dom` definiendo rutas para todas las vistas y creación de los nuevos componentes `Profile` y `NotFound` (404). Navegación con `<Link>`.
 - ✅ **Hito 6 - Context API:** Implementación de estado global. Se creó `CartContext` para manejar de manera unificada la información y acciones del carrito de compras (añadir, sumar, restar, total) impactando automáticamente el `Navbar`, la vista `Home` y el `Cart`. Además, se implementó de forma opcional el `PizzaContext` para globalizar el array de pizzas traídas por fetch.
 - ✅ **Hito 7 - React Router II:** Se implementaron rutas dinámicas (para cada pizza mediante su `id`) consumiendo información desde la API en base al ID extraído con `useParams`. Se crearon rutas protegidas redirigiendo al usuario usando `<Navigate>` en `react-router-dom`. Se añadió también `UserContext` para simular un inicio de sesión global (token) y restringir o habilitar elementos de la UI como el botón "Pagar" en el carrito o los links en el Navbar.
+- ✅ **Hito 8 - Autenticación Real (Final):** Implementación de autenticación persistente con el backend mediante JWT. Se integraron los métodos `login`, `register` y `getProfile` en el `UserContext`. Se implementó el envío real del carrito al backend (`checkout`) y se añadió feedback visual (mensajes de éxito/error) para todas las operaciones asíncronas.
+
 
 ## Instalación y Uso
 

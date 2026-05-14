@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useState, useContext } from "react";
 import { CartContext } from "../context/CartContext";
 import { UserContext } from "../context/UserContext";
 import { formatCurrency } from "../utils/formatCurrency";
@@ -6,10 +6,38 @@ import { formatCurrency } from "../utils/formatCurrency";
 const Cart = () => {
     const { cart, increaseQuantity, decreaseQuantity, total } = useContext(CartContext);
     const { token } = useContext(UserContext);
+    const [message, setMessage] = useState("");
+
+    const handleCheckout = async () => {
+        try {
+            const response = await fetch("http://localhost:5000/api/checkouts", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify({
+                    cart: cart,
+                }),
+            });
+            if (response.ok) {
+                setMessage("¡Compra realizada con éxito! 🍕");
+            } else {
+                setMessage("❌ Error al procesar la compra.");
+            }
+        } catch (error) {
+            setMessage("❌ Error de red.");
+        }
+    };
 
     return (
         <div className="container my-5" style={{ maxWidth: "600px" }}>
             <h3 className="mb-4">Detalles del pedido:</h3>
+            {message && (
+                <div className={`alert ${message.includes("éxito") ? "alert-success" : "alert-danger"} mb-4`} role="alert">
+                    {message}
+                </div>
+            )}
             <div className="list-group mb-4">
                 {cart.map((item) => (
                     <div key={item.id} className="list-group-item d-flex justify-content-between align-items-center">
@@ -27,9 +55,10 @@ const Cart = () => {
                 ))}
             </div>
             <h2 className="text-dark">Total: ${formatCurrency(total)}</h2>
-            <button className="btn btn-dark mt-3" disabled={!token}>Pagar</button>
+            <button className="btn btn-dark mt-3" disabled={!token || cart.length === 0} onClick={handleCheckout}>Pagar</button>
         </div>
     );
 };
+
 
 export default Cart;

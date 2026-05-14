@@ -1,13 +1,15 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { UserContext } from '../context/UserContext';
 
 const Register = () => {
+  const { register } = useContext(UserContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [message, setMessage] = useState('');
   const [isError, setIsError] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Validations
@@ -29,10 +31,18 @@ const Register = () => {
       return;
     }
 
-    // Success
-    setMessage('🍕 ¡Registro completado con éxito! Ya eres parte de Mamma Mía.');
-    setIsError(false);
+    // Call register from UserContext
+    const response = await register(email, password);
+    
+    if (response.token) {
+      setMessage('🍕 ¡Registro completado con éxito! Ya eres parte de Mamma Mía.');
+      setIsError(false);
+    } else {
+      setMessage('❌ ' + (response.error || 'Error al registrarse. Inténtalo nuevamente.'));
+      setIsError(true);
+    }
   };
+
 
   return (
     <div className="container mt-5 mb-5">

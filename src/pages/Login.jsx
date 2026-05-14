@@ -1,12 +1,14 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { UserContext } from '../context/UserContext';
 
 const Login = () => {
+  const { login } = useContext(UserContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
   const [isError, setIsError] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Validations
@@ -22,10 +24,18 @@ const Login = () => {
       return;
     }
 
-    // Success
-    setMessage('🍕 ¡Inicio de sesión exitoso! Bienvenido a Pizzería Mamma Mía.');
-    setIsError(false);
+    // Call login from UserContext
+    const response = await login(email, password);
+    
+    if (response.token) {
+      setMessage('🍕 ¡Inicio de sesión exitoso! Bienvenido a Pizzería Mamma Mía.');
+      setIsError(false);
+    } else {
+      setMessage('❌ ' + (response.error || 'Error al iniciar sesión. Inténtalo nuevamente.'));
+      setIsError(true);
+    }
   };
+
 
   return (
     <div className="container mt-5">
